@@ -277,6 +277,15 @@ class AuxiliaryWindow(QMainWindow):
       self.actLegend.triggered.connect( self.onActionLegend )
       self.canvas.setMapTool( self.toolPan )
       self.canvas.setCanvasColor( QColor(255,255,255) )
+      
+      #Capture the selection color of QGIS to apply to auxiliary windows
+      prj = QgsProject.instance()
+      myRed = prj.readNumEntry( "Gui", "/SelectionColorRedPart")
+      myGreen = prj.readNumEntry( "Gui", "/SelectionColorGreenPart")
+      myBlue = prj.readNumEntry( "Gui", "/SelectionColorBluePart")
+      myAlpha = prj.readNumEntry( "Gui", "/SelectionColorAlphaPart")
+      self.canvas.setSelectionColor( QColor(myRed[0], myGreen[0], myBlue[0], myAlpha[0] ))
+      
       self.canvas.enableAntiAliasing( False )
       self.canvas.useImageToRender( False )
       self.canvas.setWheelAction( QgsMapCanvas.WheelZoom )
